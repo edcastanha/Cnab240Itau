@@ -1,0 +1,27 @@
+
+{
+  "header_arquivo": {
+    "banco": 3,
+    "lote": 4,
+    "registro": 1,
+    "empresa_inscricao_tipo": 14,
+    "empresa_inscricao_numero": 14,
+    "empresa_convenio": 20,
+    "empresa_conta_agencia": 5,
+    "empresa_conta_agencia_dv": 1,
+    "empresa_conta_numero": 12,
+    "empresa_conta_dv": 1,
+    "empresa_agencia_conta_dv": 1,
+    "empresa_nome": 30
+  },
+  "segmento_a": {
+    "banco": 3,
+    "lote": 4,
+    "registro": 1,
+    "numero_registro": 5,
+    "segmento": 1,
+    "movimento_tipo": 1,
+    "instrucao": 2,
+    "camara": 3
+  }
+}
