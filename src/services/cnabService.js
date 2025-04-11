@@ -14,9 +14,17 @@ class CnabService {
       linhas.push(CnabController.generateHeaderLote(empresa, 20)); // 20 = Fornecedores
       
       // Adiciona registros de pagamento
-      pagamentos.forEach((pagamento, index) => {
-        valorTotal += pagamento.valor;
-        // TODO: Implementar geração de segmentos A, B, etc.
+      let numSeq = 2;
+      pagamentos.forEach((pagamento) => {
+        valorTotal += pagamento.valorPagamento;
+        
+        // Segmento A
+        linhas.push(CnabController.generateSegmentoA(pagamento, numSeq++));
+        
+        // Segmento B (opcional)
+        if (pagamento.enderecoBeneficiario) {
+          linhas.push(CnabController.generateSegmentoB(pagamento, numSeq++));
+        }
       });
       
       // Trailer do Lote
