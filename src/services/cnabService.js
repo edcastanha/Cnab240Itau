@@ -14,7 +14,7 @@ class CnabService {
     return this.generators.get(key);
   }
 
-  async generateRemessaFile(empresa, pagamentos, formato = '240', versao = '086', banco = '341') {
+  async generateRemessaFile(empresa, pagamentos, tipoServico, formato = '240', versao = '086', banco = '341') {
     try {
       const generator = this.getGenerator(formato, versao, banco);
       const linhas = [];

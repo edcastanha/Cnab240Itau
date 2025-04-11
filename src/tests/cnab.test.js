@@ -50,8 +50,29 @@ describe("CNAB Service - Pagamentos a Fornecedores", () => {
     tipoInscricaoBenef: 2
   });
 
-  test("Deve gerar arquivo remessa com Segmentos A e B corretamente", async () => {
-    const remessa = await CnabService.generateRemessaFile(empresa, [pagamento]);
+  test("Deve gerar arquivo remessa para Fornecedores (20)", async () => {
+    const remessa = await CnabService.generateRemessaFile(empresa, [pagamento], '20');
+    
+    const linhas = remessa.split("\n");
+    expect(linhas.length).toBe(5);
+    expect(linhas[1].substring(9, 11)).toBe('20'); // Tipo de serviço no header lote
+});
+
+test("Deve gerar arquivo remessa para PIX (45)", async () => {
+    const remessa = await CnabService.generateRemessaFile(empresa, [pagamento], '45');
+    
+    const linhas = remessa.split("\n");
+    expect(linhas.length).toBe(6); // Inclui segmento J52
+    expect(linhas[1].substring(9, 11)).toBe('45');
+});
+
+test("Deve gerar arquivo remessa para Tributos (22)", async () => {
+    const remessa = await CnabService.generateRemessaFile(empresa, [pagamento], '22');
+    
+    const linhas = remessa.split("\n");
+    expect(linhas.length).toBe(6); // Inclui segmento W
+    expect(linhas[1].substring(9, 11)).toBe('22');
+});
     
     // Salva o arquivo para inspeção manual
     await fs.writeFile('test-remessa.rem', remessa);
