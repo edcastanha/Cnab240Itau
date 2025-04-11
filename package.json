@@ -1,5 +1,5 @@
 {
-  "name": "nodejs",
+  "name": "API-CNAB240 nodejs",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "test": "jest"
   },
   "keywords": [],
-  "author": "",
+  "author": "Edson Lourenço Bezerra Filho",
   "license": "ISC",
   "dependencies": {
     "@types/node": "^22.13.11",

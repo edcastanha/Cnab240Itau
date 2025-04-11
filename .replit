@@ -57,9 +57,13 @@ author = 12732009
 mode = "sequential"
 
 [[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "npm test > test-results.txt"
+task = "workflow.run"
+args = "Test"
 
 [[ports]]
 localPort = 3000
 externalPort = 80
+
+[auth]
+pageEnabled = true
+buttonEnabled = false
