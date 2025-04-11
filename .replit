@@ -14,7 +14,7 @@ deploymentTarget = "autoscale"
 ignorePorts = false
 
 [workflows]
-runButton = "Run API"
+runButton = "Dev"
 
 [[workflows.workflow]]
 name = "Run API"
@@ -28,6 +28,19 @@ args = "npm install"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "node index.js"
+
+[[workflows.workflow]]
+name = "Dev"
+author = 12732009
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm install"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "nodemon index.js"
 
 [[ports]]
 localPort = 3000
