@@ -4,7 +4,7 @@ const path = require('path');
 
 describe("CNAB Service - Pagamentos a Fornecedores com Mock Data", () => {
   let mockData;
-  const mockFolderPath = path.join(__dirname, '../mock'); // Adjust the path if your 'mock' folder is in a different location
+  const mockFolderPath = path.join(__dirname, './mock'); //DAdos face para
 
   beforeAll(async () => {
     try {
