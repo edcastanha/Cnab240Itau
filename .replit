@@ -51,15 +51,6 @@ mode = "sequential"
 task = "shell.exec"
 args = "npm test"
 
-[[workflows.workflow]]
-name = "Test with Output"
-author = 12732009
-mode = "sequential"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "npm test > test-results.txt"
-
 [[ports]]
 localPort = 3000
 externalPort = 80
