@@ -14,7 +14,7 @@ deploymentTarget = "autoscale"
 ignorePorts = false
 
 [workflows]
-runButton = "Run API"
+runButton = "Run Start"
 
 [[workflows.workflow]]
 name = "Run API"
@@ -50,6 +50,19 @@ mode = "parallel"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "npm test"
+
+[[workflows.workflow]]
+name = "Run Start"
+mode = "sequential"
+author = 12732009
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm install"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm start"
 
 [[ports]]
 localPort = 3000
