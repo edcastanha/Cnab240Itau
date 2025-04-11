@@ -1,36 +1,39 @@
 
-const CnabController = require('../controllers/cnabController');
+const CnabGeneratorFactory = require('../factories/CnabGeneratorFactory');
 
 class CnabService {
-  async generateRemessaFile(empresa, pagamentos) {
+  constructor() {
+    this.generators = new Map();
+  }
+
+  getGenerator(formato, versao, banco) {
+    const key = `${banco}_${formato}_${versao}`;
+    if (!this.generators.has(key)) {
+      this.generators.set(key, CnabGeneratorFactory.createGenerator(formato, versao, banco));
+    }
+    return this.generators.get(key);
+  }
+
+  async generateRemessaFile(empresa, pagamentos, formato = '240', versao = '086', banco = '341') {
     try {
+      const generator = this.getGenerator(formato, versao, banco);
       const linhas = [];
       let valorTotal = 0;
       
-      // Header do Arquivo
-      linhas.push(CnabController.generateHeaderArquivo(empresa));
+      linhas.push(generator.generateHeaderArquivo(empresa));
+      linhas.push(generator.generateHeaderLote(empresa, 20));
       
-      // Header do Lote
-      linhas.push(CnabController.generateHeaderLote(empresa, 20)); // 20 = Fornecedores
-      
-      // Adiciona registros de pagamento
       let numSeq = 2;
       pagamentos.forEach((pagamento) => {
         valorTotal += pagamento.valorPagamento;
+        linhas.push(generator.generateSegment('A', pagamento, numSeq++));
         
-        // Segmento A
-        linhas.push(CnabController.generateSegmentoA(pagamento, numSeq++));
-        
-        // Segmento B (opcional)
         if (pagamento.enderecoBeneficiario) {
-          linhas.push(CnabController.generateSegmentoB(pagamento, numSeq++));
+          linhas.push(generator.generateSegment('B', pagamento, numSeq++));
         }
       });
       
-      // Trailer do Lote
-      linhas.push(CnabController.generateTrailerLote(pagamentos.length + 2, valorTotal));
-      
-      // TODO: Implementar Trailer do Arquivo
+      linhas.push(generator.generateTrailerLote(pagamentos.length + 2, valorTotal));
       
       return linhas.join('\n');
     } catch (error) {
