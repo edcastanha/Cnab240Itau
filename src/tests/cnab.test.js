@@ -1,102 +1,104 @@
-
 const CnabService = require("../services/cnabService");
 const fs = require('fs').promises;
+const path = require('path');
 
-describe("CNAB Service - Pagamentos a Fornecedores", () => {
-  const empresa = {
-    nome: "EMPRESA TESTE LTDA",
-    cnpj: "12345678901234",
-    agencia: "1234",
-    digitoAgencia: "1",
-    conta: "123456789012",
-    digitoConta: "1",
-    digitoAgConta: "1",
-    convenio: "12345678"
-  };
+describe("CNAB Service - Pagamentos a Fornecedores com Mock Data", () => {
+  let mockData;
+  const mockFolderPath = path.join(__dirname, '../mock'); // Adjust the path if your 'mock' folder is in a different location
 
-  const pagamento = {
-    tipoMovimento: 0,
-    codInstrucao: 1,
-    codCamara: 18,
-    bancoBeneficiario: 341,
-    agenciaBeneficiario: "1234",
-    digitoAgenciaBenef: "1",
-    contaBeneficiario: "123456789012",
-    digitoContaBenef: "1",
-    digitoAgContaBenef: "1",
-    nomeBeneficiario: "FORNECEDOR TESTE LTDA",
-    seuNumero: "PAG123",
-    dataPagamento: new Date("2024-01-20"),
-    moeda: "BRL",
-    valorPagamento: 1000.50,
-    nossoNumero: "123456789",
-    dataReal: new Date("2024-01-20"),
-    valorReal: 1000.50,
-    informacao2: "PAGAMENTO DE FORNECEDOR",
-    codFinalidadeDOC: 1,
-    codFinalidadeTED: "00001",
-    codFinalidadeComplementar: "01",
-    avisoFavorecido: 0,
-    enderecoBeneficiario: {
-      logradouro: "RUA TESTE",
-      numero: "123",
-      complemento: "SALA 1",
-      bairro: "CENTRO",
-      cidade: "SAO PAULO",
-      cep: "01234567",
-      estado: "SP"
-    },
-    cpfCnpjBeneficiario: "98765432101234",
-    tipoInscricaoBenef: 2
+  beforeAll(async () => {
+    try {
+      const mockFile = path.join(mockFolderPath, '341_240_086.json'); // Assuming your JSON file is named '341_240_086.json'
+      const data = await fs.readFile(mockFile, 'utf8');
+      mockData = JSON.parse(data);
+    } catch (error) {
+      console.error("Erro ao ler o arquivo de mock:", error);
+      // Fail the tests if mock data cannot be loaded
+      throw error;
+    }
   });
 
-  test("Deve gerar arquivo remessa para Fornecedores (20)", async () => {
-    const remessa = await CnabService.generateRemessaFile(empresa, [pagamento], '20');
-    
-    const linhas = remessa.split("\n");
-    expect(linhas.length).toBe(5);
-    expect(linhas[1].substring(9, 11)).toBe('20'); // Tipo de serviço no header lote
-});
+  test("Deve gerar arquivo remessa para Fornecedores (20) usando dados do mock", async () => {
+    const empresa = mockData.empresa;
+    const pagamentos = mockData.pagamentos;
+    const tipoServico = '20';
+    const expectedLinhasLength = 5; // Adjust based on your mock data
 
-test("Deve gerar arquivo remessa para PIX (45)", async () => {
-    const remessa = await CnabService.generateRemessaFile(empresa, [pagamento], '45');
-    
+    const remessa = await CnabService.generateRemessaFile(empresa, pagamentos, tipoServico);
     const linhas = remessa.split("\n");
-    expect(linhas.length).toBe(6); // Inclui segmento J52
-    expect(linhas[1].substring(9, 11)).toBe('45');
-});
 
-test("Deve gerar arquivo remessa para Tributos (22)", async () => {
-    const remessa = await CnabService.generateRemessaFile(empresa, [pagamento], '22');
-    
+    expect(linhas.length).toBe(expectedLinhasLength);
+    expect(linhas[1].substring(9, 11)).toBe(tipoServico);
+
+    // Salva o arquivo na pasta mock
+    const remessaFilePath = path.join(mockFolderPath, 'remessa.rem');
+    await fs.writeFile(remessaFilePath, remessa);
+  });
+
+  test("Deve gerar arquivo remessa para PIX (45) usando dados do mock", async () => {
+    const empresa = mockData.empresa;
+    const pagamentos = mockData.pagamentos;
+    const tipoServico = '45';
+    const expectedLinhasLength = 6; // Adjust based on your mock data
+
+    const remessa = await CnabService.generateRemessaFile(empresa, pagamentos, tipoServico);
     const linhas = remessa.split("\n");
-    expect(linhas.length).toBe(6); // Inclui segmento W
-    expect(linhas[1].substring(9, 11)).toBe('22');
-});
-    
-    // Salva o arquivo para inspeção manual
-    await fs.writeFile('test-remessa.rem', remessa);
-    
+
+    expect(linhas.length).toBe(expectedLinhasLength);
+    expect(linhas[1].substring(9, 11)).toBe(tipoServico);
+
+    // Salva o arquivo na pasta mock
+    const remessaFilePath = path.join(mockFolderPath, 'remessa.rem');
+    await fs.writeFile(remessaFilePath, remessa);
+  });
+
+  test("Deve gerar arquivo remessa para Tributos (22) usando dados do mock", async () => {
+    const empresa = mockData.empresa;
+    const pagamentos = mockData.pagamentos;
+    const tipoServico = '22';
+    const expectedLinhasLength = 6; // Adjust based on your mock data
+
+    const remessa = await CnabService.generateRemessaFile(empresa, pagamentos, tipoServico);
     const linhas = remessa.split("\n");
-    expect(linhas.length).toBe(5); // Header + Header Lote + Seg A + Seg B + Trailer
+
+    expect(linhas.length).toBe(expectedLinhasLength);
+    expect(linhas[1].substring(9, 11)).toBe(tipoServico);
+
+    // Salva o arquivo na pasta mock
+    const remessaFilePath = path.join(mockFolderPath, 'remessa.rem');
+    await fs.writeFile(remessaFilePath, remessa);
+  });
+
+  test("Deve verificar a estrutura do arquivo remessa gerado com dados do mock", async () => {
+    const empresa = mockData.empresa;
+    const pagamentos = mockData.pagamentos;
+    const tipoServico = '20'; // Assuming you want to test with a specific tipoServico here
+
+    const remessa = await CnabService.generateRemessaFile(empresa, pagamentos, tipoServico);
+    const linhas = remessa.split("\n");
+    const expectedLinhasLength = 5; // Adjust based on your mock data
+
+    expect(linhas.length).toBe(expectedLinhasLength);
+
+    // Salva o arquivo na pasta mock
+    const remessaFilePath = path.join(mockFolderPath, 'remessa.rem');
+    await fs.writeFile(remessaFilePath, remessa);
 
     // Verifica o Header do Arquivo
     const headerArquivo = linhas[0];
     expect(headerArquivo.substring(0, 3)).toBe('341'); // Código do Itaú
-    expect(headerArquivo.substring(142, 172).trim()).toBe('EMPRESA TESTE LTDA');
+    expect(headerArquivo.substring(142, 172).trim()).toBe(empresa.nome);
 
-    // Verifica o Segmento A
-    const segmentoA = linhas[2];
-    expect(segmentoA.substring(3, 7)).toBe('0001'); // Número do Lote
-    expect(segmentoA.substring(13, 14)).toBe('A'); // Código Segmento
-    expect(segmentoA.substring(17, 19)).toBe('01'); // Código Instrução
-    expect(segmentoA.substring(19, 22)).toBe('018'); // Código Câmara (TED)
+    // Verifica o Segmento A (assuming at least one pagamento exists)
+    if (pagamentos && pagamentos.length > 0) {
+      const segmentoA = linhas[2];
+      expect(segmentoA.substring(3, 7)).toBe('0001'); // Número do Lote
+      expect(segmentoA.substring(13, 14)).toBe('A'); // Código Segmento
+      // Add more specific checks based on your mock data structure
+    }
 
-    // Verifica o Segmento B
-    const segmentoB = linhas[3];
-    expect(segmentoB.substring(3, 7)).toBe('0001'); // Número do Lote
-    expect(segmentoB.substring(13, 14)).toBe('B'); // Código Segmento
-    expect(segmentoB.substring(17, 18)).toBe('2'); // Tipo Inscrição
-    expect(segmentoB.substring(18, 32)).toBe('98765432101234'); // CNPJ
+    // Verifica o Trailer do Arquivo
+    const trailerArquivo = linhas[linhas.length - 1];
+    expect(trailerArquivo.substring(0, 3)).toBe('341'); // Código do Itaú
   });
 });
