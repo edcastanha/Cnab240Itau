@@ -34,10 +34,6 @@ class CnabController {
 
     return linha.join('');
   }
-}
-
-module.exports = new CnabController();
-
 
   generateHeaderLote(empresa, servicoLote) {
     const linha = [];
@@ -146,3 +142,7 @@ module.exports = new CnabController();
     linha.push(formatAlpha('', 15)); // CNAB
     return linha.join('');
   }
+
+}
+
+module.exports = new CnabController();
