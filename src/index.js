@@ -2,7 +2,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
-const config = require('./src/config');
+const config = require('./config');
 
 const app = express();
 
@@ -12,7 +12,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 // Importar rotas
-const cnabRoutes = require('./src/routes/cnabRoutes');
+const cnabRoutes = require('./routes/cnabRoutes');
 
 // Usar rotas
 app.use('/api/cnab', cnabRoutes);

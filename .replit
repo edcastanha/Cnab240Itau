@@ -27,7 +27,7 @@ args = "npm install"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "node index.js"
+args = "node src/index.js"
 
 [[workflows.workflow]]
 name = "Dev"

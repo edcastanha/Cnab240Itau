@@ -2,10 +2,10 @@
   "name": "API-CNAB240 nodejs",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "jest",
-    "start": "nodemon index.js"
+    "dev": "nodemon src/index.js"
   },
   "keywords": [],
   "author": "Edson Lourenço Bezerra Filho",
