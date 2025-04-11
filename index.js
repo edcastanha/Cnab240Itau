@@ -11,7 +11,13 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 
-// Rotas básicas
+// Importar rotas
+const cnabRoutes = require('./src/routes/cnabRoutes');
+
+// Usar rotas
+app.use('/api/cnab', cnabRoutes);
+
+// Rota básica
 app.get('/', (req, res) => {
   res.json({ message: 'API CNAB 240 - SISPAG Itaú' });
 });
