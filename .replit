@@ -42,6 +42,15 @@ args = "npm install"
 task = "shell.exec"
 args = "nodemon index.js"
 
+[[workflows.workflow]]
+name = "Test"
+author = 12732009
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm test"
+
 [[ports]]
 localPort = 3000
 externalPort = 80
