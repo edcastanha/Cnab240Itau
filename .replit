@@ -14,7 +14,7 @@ deploymentTarget = "autoscale"
 ignorePorts = false
 
 [workflows]
-runButton = "Dev"
+runButton = "Test"
 
 [[workflows.workflow]]
 name = "Run API"
