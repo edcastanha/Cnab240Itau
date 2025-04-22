@@ -1,4 +1,6 @@
 const CnabGeneratorFactory = require('../factories/CnabGeneratorFactory');
+const ServicosLote = require('../models/cnab/ServicosLote');
+const { generateSegment } = require('../utils/segmentFactory');
 
 class CnabService {
   constructor() {
@@ -51,15 +53,27 @@ class CnabService {
       let numSeq = 2; // Sequência inicial após os headers
       pagamentos.forEach((pagamento) => {
         valorTotal += pagamento.valor; // Soma o valor do pagamento
-        linhas.push(generator.generateSegment('A', pagamento, numSeq++));
-
-        if (pagamento.enderecoBeneficiario) {
-          linhas.push(generator.generateSegment('B', pagamento, numSeq++));
-        }
+        const segmentos = ServicosLote.getSegmentosByServico(tipoServico);
+        segmentos.forEach((segmento) => {
+          linhas.push(generateSegment(segmento, pagamento, numSeq++));
+        });
       });
 
       // Gera o trailer do lote
       linhas.push(generator.generateTrailerLote(pagamentos.length + 2, valorTotal));
+
+      linhas.push(generator.generateTrailerArquivo(pagamentos.length + 2, valorTotal));
+
+      // Gerar arquivo .rem no path .outputFile
+      const outputFile = `./output/remessa_${tipoServico}.rem`;
+      const fs = require('fs');
+      fs.writeFileSync(outputFile, linhas.join('\n'), 'utf8');
+      console.log(`Arquivo de remessa gerado: ${outputFile}`);
+      // Gera o trailer do arquivo
+      // Gera o arquivo .rem no path .outputFile
+
+
+
 
       // Retorna o conteúdo do arquivo como uma string
       return linhas.join('\n');

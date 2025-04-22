@@ -1,4 +1,3 @@
-
 const ICnabFileGenerator = require('../models/cnab/ICnabFileGenerator');
 const { formatNumeric, formatAlpha, formatDate, formatValue } = require('../utils/formatters');
 
@@ -9,11 +8,19 @@ class Cnab240ItauGenerator extends ICnabFileGenerator {
   }
 
   generateHeaderArquivo(empresa) {
-    // Implementação atual do Header Arquivo
-    const linha = [];
-    linha.push(formatNumeric(341, 3)); // Código Itaú
-    // ... resto da implementação atual ...
-    return linha.join('');
+    return `0HEADER ARQUIVO ${empresa.nome.padEnd(30)}${this.config.codigoBanco}`;
+  }
+
+  generateHeaderLote(empresa, tipoServico) {
+    return `1HEADER LOTE ${tipoServico} ${empresa.nome.padEnd(30)}${this.config.codigoBanco}`;
+  }
+
+  generateSegment(segmento, pagamento, numSeq) {
+    return `${numSeq}SEGMENTO ${segmento} ${pagamento.valor.toFixed(2).padStart(15, '0')}`;
+  }
+
+  generateTrailerLote(qtdRegistros, valorTotal) {
+    return `9TRAILER LOTE ${qtdRegistros} ${valorTotal.toFixed(2).padStart(15, '0')}`;
   }
 
   generateSegment(tipo, dados, numSeq) {
@@ -37,6 +44,7 @@ class Cnab240ItauGenerator extends ICnabFileGenerator {
     // Implementação do segmento N para tributos
     const linha = [];
     // TODO: Implementar conforme layout do banco
+    
     return linha.join('');
   }
 

@@ -1,9 +1,9 @@
-
 const Cnab240ItauGenerator = require('../generators/Cnab240ItauGenerator');
 const CnabConfig = require('../models/cnab/CnabConfig');
 
 class CnabGeneratorFactory {
   static createGenerator(formato, versao, banco) {
+    console.log(`Criando gerador para Banco: ${banco}, Formato: ${formato}, Versão: ${versao}`);
     const config = new CnabConfig(formato, versao, banco);
     
     switch(banco) {

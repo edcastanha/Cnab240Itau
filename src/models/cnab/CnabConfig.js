@@ -1,3 +1,4 @@
+const path = require('path');
 
 class CnabConfig {
   constructor(formato, versao, banco) {
@@ -8,7 +9,7 @@ class CnabConfig {
   }
 
   loadConfig() {
-    const configPath = `./config/${this.banco}_${this.formato}_${this.versao}.json`;
+    const configPath = path.join(__dirname, `../../config/${this.banco}_${this.formato}_${this.versao}.json`);
     try {
       return require(configPath);
     } catch (error) {

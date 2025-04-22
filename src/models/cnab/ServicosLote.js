@@ -1,4 +1,3 @@
-
 class ServicosLote {
   static FORNECEDORES = '20';
   static PIX = '45';

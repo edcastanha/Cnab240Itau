@@ -1,0 +1,14 @@
+{
+  "banco": "341",
+  "formato": "240",
+  "versao": "086",
+  "nomeBanco": "Banco Itaú",
+  "codigoBanco": "341",
+  "layout": "086",
+  "convenio": "123456",
+  "agencia": "1234",
+  "conta": "12345678",
+  "digitoAgencia": "1",
+  "digitoConta": "1",
+  "digitoAgConta": "1"
+}
