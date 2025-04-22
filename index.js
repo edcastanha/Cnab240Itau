@@ -1,4 +1,3 @@
-
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
@@ -15,7 +14,7 @@ app.use(express.json());
 const cnabRoutes = require('./src/routes/cnabRoutes');
 
 // Usar rotas
-app.use('/api/cnab', cnabRoutes);
+app.use('/cnab', cnabRoutes);
 
 // Rota básica
 app.get('/', (req, res) => {
@@ -31,6 +30,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(config.port, '0.0.0.0', () => {
-  console.log(`Servidor rodando na porta ${config.port}`);
+const PORT = process.env.PORT || config.port;
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
 });

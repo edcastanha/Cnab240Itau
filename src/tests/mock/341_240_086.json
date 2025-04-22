@@ -1,4 +1,3 @@
-
 {
   "header_arquivo": {
     "banco": 3,
@@ -80,5 +79,16 @@
     "numero_registro": 5,
     "tipo_movimento": 1,
     "codigo_registro": 2
-  }
+  },
+  "empresa": {
+    "nome": "Empresa Teste",
+    "banco": 341,
+    "formato": 240,
+    "versao": 86
+  },
+  "pagamentos": [
+    { "tipo": 20, "valor": 1000 },
+    { "tipo": 45, "valor": 2000 },
+    { "tipo": 22, "valor": 1500 }
+  ]
 }
