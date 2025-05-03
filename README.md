@@ -11,17 +11,9 @@ API REST para geração de arquivos de remessa no formato CNAB240, compatível c
 - Logs detalhados das operações
 - Testes automatizados
 
-## 🛠️ Tecnologias
-
-- Node.js
-- Express.js
-- Jest (testes)
-- Morgan (logging)
-- Winston (logging avançado)
-
 ## 📋 Pré-requisitos
 
-- Node.js 16.x ou superior
+- Node.js 16.x
 - NPM 8.x ou superior
 
 ## 🔧 Instalação e Execução

@@ -6,24 +6,8 @@ Este documento define os requisitos para a criação de um website que forneça 
 
 O website CNAB 240 será uma aplicação web que permitirá aos usuários gerar arquivos de remessa CNAB 240 para o SISPAG do Itaú através de uma interface gráfica intuitiva, sem necessidade de conhecimento técnico sobre a estrutura dos arquivos ou chamadas de API.
 
-## 2. Requisitos Funcionais
 
-### 2.1. Autenticação e Autorização
-
-- **RF001**: O sistema deve permitir o registro de novos usuários
-- **RF002**: O sistema deve permitir login de usuários existentes
-- **RF003**: O sistema deve implementar controle de acesso baseado em perfis (admin, usuário)
-- **RF004**: O sistema deve permitir recuperação de senha
-- **RF005**: O sistema deve implementar logout seguro
-
-### 2.2. Gestão de Empresas
-
-- **RF006**: O sistema deve permitir cadastrar múltiplas empresas (pagadoras)
-- **RF007**: O sistema deve permitir editar dados das empresas cadastradas
-- **RF008**: O sistema deve permitir visualizar lista de empresas cadastradas
-- **RF009**: O sistema deve permitir desativar empresas
-
-### 2.3. Geração de Arquivos CNAB 240
+## 2 Geração de Arquivos CNAB 240
 
 - **RF010**: O sistema deve permitir selecionar o tipo de pagamento (Fornecedores, Salários, Tributos, Boletos, PIX)
 - **RF011**: O sistema deve apresentar formulários específicos para cada tipo de pagamento
@@ -32,25 +16,6 @@ O website CNAB 240 será uma aplicação web que permitirá aos usuários gerar 
 - **RF014**: O sistema deve permitir gerar o arquivo CNAB 240
 - **RF015**: O sistema deve permitir baixar o arquivo gerado
 - **RF016**: O sistema deve permitir visualizar um resumo do arquivo gerado
-
-### 2.4. Importação de Dados
-
-- **RF017**: O sistema deve permitir importar pagamentos a partir de arquivos CSV/Excel
-- **RF018**: O sistema deve validar os dados importados
-- **RF019**: O sistema deve permitir corrigir dados inválidos antes da geração do arquivo
-
-### 2.5. Histórico e Gestão de Arquivos
-
-- **RF020**: O sistema deve manter histórico de arquivos gerados
-- **RF021**: O sistema deve permitir baixar arquivos gerados anteriormente
-- **RF022**: O sistema deve permitir regenerar arquivos a partir de dados salvos
-- **RF023**: O sistema deve permitir excluir arquivos do histórico
-
-### 2.6. Dashboard e Relatórios
-
-- **RF024**: O sistema deve apresentar um dashboard com estatísticas de uso
-- **RF025**: O sistema deve permitir gerar relatórios de arquivos gerados por período
-- **RF026**: O sistema deve permitir filtrar relatórios por tipo de pagamento, empresa, etc.
 
 ## 3. Requisitos Não Funcionais
 
